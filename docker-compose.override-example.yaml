@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  web-server:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.syllabus.entrypoints=http"
+      - "traefik.http.routers.syllabus.rule=HostRegexp(`syllabus.test`, `{subdomain:[\\S]+}.syllabus.test`)"
+    image: caddy:2-alpine
+    expose:
+      - 80
+      - 443
+    volumes:
+      - ./.docker/server/Caddyfile:/etc/caddy/Caddyfile:ro
+      - .:/var/www/html:delegated
+    restart: unless-stopped
+    networks:
+      web:
+        aliases:
+          - syllabus.test
+
+  app:
+    user: "1000:1000"
+    image: ghcr.io/josepostiga/syllabus/php:dev
+    networks:
+      - web
+
+  scheduler:
+    image: ghcr.io/josepostiga/syllabus/php:dev
+
+  postgres:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: syllabus
+    restart: unless-stopped
+    networks:
+      - syllabus
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    networks:
+      - syllabus
+
+volumes:
+  postgres_data:
+
+networks:
+  web:
+    external: true
