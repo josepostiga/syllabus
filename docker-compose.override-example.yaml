@@ -26,7 +26,7 @@ services:
       - web
 
   scheduler:
-    image: ghcr.io/josepostiga/syllabus/php:dev
+    image: ghcr.io/josepostiga/syllabus/scheduler
 
   postgres:
     image: postgres:13
