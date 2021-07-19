@@ -37,8 +37,10 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-suggest
 
-      - name: Activate Laravel Passport
-        run: php artisan passport:keys --no-interaction
+      - name: Activate framework
+        run: |
+          cp .env.example .env
+          php artisan migrate
 
       - name: Run tests
         run: vendor/bin/phpunit --testdox --coverage-clover build/logs/clover.xml
