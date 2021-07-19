@@ -38,7 +38,9 @@ jobs:
         run: composer install --no-interaction --no-suggest
 
       - name: Activate framework
-        run: cp .env.example .env
+        run: |
+          cp .env.example .env
+          php artisan key:generate
 
       - name: Run tests
         run: vendor/bin/phpunit --testdox --coverage-clover build/logs/clover.xml
