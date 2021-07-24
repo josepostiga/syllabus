@@ -3,7 +3,7 @@
 A School Management System built with students, parents, and teachers, in mind.
 
 ![Run tests](https://github.com/josepostiga/syllabus/workflows/Run%20tests/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/josepostiga/syllabus/badge.svg?branch=master)](https://coveralls.io/github/josepostiga/syllabus?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/josepostiga/syllabus/badge.svg?branch=main)](https://coveralls.io/github/josepostiga/syllabus?branch=main)
 
 For detailed information, check the [documentation](https://github.com/josepostiga/syllabus/wiki).
 
@@ -21,7 +21,7 @@ vendor/bin/phpunit
 
 _Note: This assumes you've run `composer install` (without the `--no-dev` option)._
 
-**We aim to keep the master branch always deployable.** Exceptions may happen, but they should be extremely rare.
+**We aim to keep the main branch always deployable.** Exceptions may happen, but they should be extremely rare.
 
 ## Changelog
 
