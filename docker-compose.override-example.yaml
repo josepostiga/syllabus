@@ -5,7 +5,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.syllabus.entrypoints=http"
-      - "traefik.http.routers.syllabus.rule=HostRegexp(`syllabus.test`, `{subdomain:[\\S]+}.syllabus.test`)"
+      - "traefik.http.routers.syllabus.rule=HostRegexp(`getsyllabus.test`, `{subdomain:[\\S]+}.getsyllabus.test`)"
     image: caddy:2-alpine
     expose:
       - 80

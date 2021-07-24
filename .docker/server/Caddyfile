@@ -1,4 +1,4 @@
-syllabus.test:80 *.syllabus.test:80
+getsyllabus.test:80 *.getsyllabus.test:80
 
 root * /var/www/html/public
 php_fastcgi app:9000
