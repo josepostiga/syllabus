@@ -29,7 +29,7 @@ class CreateUserCommand extends Command
         $user->role = $role;
         $user->email_verified_at = now();
 
-        return $user->save();
+        return $user->save() ? static::SUCCESS : static::FAILURE;
     }
 
     private function validate(string $name, string $email, string $role): void
