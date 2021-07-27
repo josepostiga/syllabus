@@ -1,32 +1,25 @@
 version: '3.8'
 
 services:
-  web-server:
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.syllabus.entrypoints=http"
-      - "traefik.http.routers.syllabus.rule=HostRegexp(`getsyllabus.test`, `{subdomain:[\\S]+}.getsyllabus.test`)"
-    image: caddy:2-alpine
-    expose:
-      - 80
-      - 443
-    volumes:
-      - ./.docker/server/Caddyfile:/etc/caddy/Caddyfile:ro
-      - .:/var/www/html:delegated
-    restart: unless-stopped
-    networks:
-      web:
-        aliases:
-          - syllabus.test
-
   app:
     user: "1000:1000"
     image: ghcr.io/josepostiga/syllabus/php:dev
     networks:
       - web
 
-  scheduler:
-    image: ghcr.io/josepostiga/syllabus/scheduler
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    expose:
+      - 1025
+    ports:
+      - 8025:8025
+    volumes:
+      - mailhog_data:/maildir
+    environment:
+      MH_STORAGE: maildir
+    restart: unless-stopped
+    networks:
+      - syllabus
 
   postgres:
     image: postgres:13
@@ -51,7 +44,29 @@ services:
     networks:
       - syllabus
 
+  scheduler:
+    image: ghcr.io/josepostiga/syllabus/scheduler
+
+  web-server:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.syllabus.entrypoints=http"
+      - "traefik.http.routers.syllabus.rule=HostRegexp(`getsyllabus.test`, `{subdomain:[\\S]+}.getsyllabus.test`)"
+    image: caddy:2-alpine
+    expose:
+      - 80
+      - 443
+    volumes:
+      - ./.docker/server/Caddyfile:/etc/caddy/Caddyfile:ro
+      - .:/var/www/html:delegated
+    restart: unless-stopped
+    networks:
+      web:
+        aliases:
+          - getsyllabus.test
+
 volumes:
+  mailhog_data:
   postgres_data:
 
 networks:
