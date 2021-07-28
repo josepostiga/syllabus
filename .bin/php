@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 docker run --rm -ti \
-    --network "${NETWORK:-host}" \
+    --network "${NETWORK:-syllabus}" \
     --user "$(id -u):$(id -g)" \
     --volume "$SSH_AUTH_SOCK":/ssh-auth.sock \
     --volume /etc/passwd:/etc/passwd:ro \
