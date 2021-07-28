@@ -1,41 +1,43 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Controllers\Auth;
 
 use Domains\Accounts\Database\Factories\UserFactory;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class AuthenticationTest extends TestCase
+class LoginControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_login_screen_can_be_rendered()
+    /** @test */
+    public function login_screen_can_be_rendered(): void
     {
-        $response = $this->get('/login');
-
-        $response->assertStatus(200);
+        $this->get(route('login'))
+            ->assertStatus(200);
     }
 
-    public function test_users_can_authenticate_using_the_login_screen()
+    /** @test */
+    public function users_can_authenticate_using_the_login_screen(): void
     {
         $user = UserFactory::new()->create();
 
-        $response = $this->post('/login', [
+        $this->post(route('login'), [
             'email' => $user->email,
             'password' => 'password',
-        ]);
+        ])
+            ->assertRedirect(RouteServiceProvider::HOME);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
     }
 
-    public function test_users_can_not_authenticate_with_invalid_password()
+    /** @test */
+    public function users_can_not_authenticate_with_invalid_password(): void
     {
         $user = UserFactory::new()->create();
 
-        $this->post('/login', [
+        $this->post(route('login'), [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
