@@ -4,6 +4,7 @@ return [
     'email' => 'E-mail',
     'name' => 'Name',
     'password' => 'Password',
+    'role' => 'Role',
 
     'errors' => [
         'failed' => 'These credentials do not match our records.',

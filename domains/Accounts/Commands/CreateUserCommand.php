@@ -20,7 +20,7 @@ class CreateUserCommand extends Command
 
         $this->validate($name, $email, $role);
 
-        $this->info('accounts::auth.messages.user_without_password');
+        $this->info(__('accounts::auth.messages.user_without_password'));
 
         $user = new User([
             'name' => $name,
@@ -32,7 +32,7 @@ class CreateUserCommand extends Command
         return $user->save() ? static::SUCCESS : static::FAILURE;
     }
 
-    private function validate(string $name, string $email, string $role): void
+    private function validate(?string $name, ?string $email, ?string $role): void
     {
         Validator::make(
             [
