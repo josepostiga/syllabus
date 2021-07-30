@@ -16,11 +16,10 @@ Route::middleware(['guest'])
         $router->get('/login', [LoginController::class, 'show'])->name('login');
         $router->post('/login', [LoginController::class, 'authenticate']);
 
-        $router->get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
-        $router->post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+        $router->get('/forgot-password', [PasswordResetLinkController::class, 'show'])->name('password.request');
+        $router->post('/forgot-password', [PasswordResetLinkController::class, 'sendEmail'])->name('password.email');
 
-        $router->get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-
+        $router->get('/reset-password/{token}', [NewPasswordController::class, 'show'])->name('password.reset');
         $router->post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
     });
 
