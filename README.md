@@ -18,6 +18,7 @@ The following installation steps requires Docker and Docker-Compose to be instal
 1. If you already have a webserver (like Apache, NGINX, or other), simply route the traffic to the project's `web-server` container. If not, you can edit the `docker-compose.override.yaml` file and add the necessary ports mapping to bind your host's ports to the container's.
 1. Run `docker-compose up -d`
 1. Run `.bin/php.sh artisan migrate`
+1. Run `.bin/php.sh artisan accounts:create-user` to create the first Director account and log into the application.
 
 If you have any problems, refer to the [Discussions Support category](https://github.com/josepostiga/syllabus/discussions/categories/support) to ask for help.
 
