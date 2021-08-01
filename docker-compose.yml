@@ -1,28 +1,28 @@
 version: '3.8'
 
 services:
-    app:
-        image: ghcr.io/josepostiga/syllabus/php
-        restart: unless-stopped
-        volumes:
-            - ./:/var/www/html
-        expose:
-            - 9000
-        networks:
-            - syllabus
+  app:
+    image: ghcr.io/josepostiga/syllabus/php
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
+    expose:
+      - 9000
+    networks:
+      - syllabus
 
-    scheduler:
-        image: ghcr.io/josepostiga/syllabus/scheduler
-        restart: unless-stopped
-        volumes:
-            - ./:/var/www/html
-            - ./.docker/scheduler/cron.d:/etc/cron.d
-        expose:
-            - 9000
-        networks:
-            - syllabus
-        entrypoint: ./.docker/scheduler/entrypoint.sh
+  scheduler:
+    image: ghcr.io/josepostiga/syllabus/scheduler
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
+      - ./.docker/scheduler/cron.d:/etc/cron.d
+    expose:
+      - 9000
+    networks:
+      - syllabus
+    entrypoint: ./.docker/scheduler/entrypoint.sh
 
 networks:
-    syllabus:
-        name: syllabus
+  syllabus:
+    name: syllabus
