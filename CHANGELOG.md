@@ -6,7 +6,7 @@ All notable changes to this repository will be documented in this file.
 
 ### Added
 
-- N/A
+- Directors must be able to log in and log out of the system (#1)
 
 ### Changed
 
