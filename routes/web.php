@@ -20,3 +20,4 @@ Route::view('/dashboard', 'dashboard')
     ->name('dashboard');
 
 require __DIR__.'/auth.php';
+require __DIR__.'/accounts.php';

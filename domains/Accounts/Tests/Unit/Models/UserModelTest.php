@@ -4,6 +4,7 @@ namespace Domains\Accounts\Tests\Unit\Models;
 
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Tests\TestCase;
 
 class UserModelTest extends TestCase
@@ -35,5 +36,19 @@ class UserModelTest extends TestCase
         $this->model->role = UserRolesEnum::DIRECTOR;
 
         self::assertTrue($this->model->isDirector());
+    }
+
+    /** @test */
+    public function it_can_be_have_a_teacher_role(): void
+    {
+        $this->model->role = UserRolesEnum::TEACHER;
+
+        self::assertTrue($this->model->isTeacher());
+    }
+
+    /** @test */
+    public function it_implements_email_verification_contract(): void
+    {
+        self::assertInstanceOf(MustVerifyEmail::class, $this->model);
     }
 }
