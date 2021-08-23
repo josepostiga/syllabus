@@ -1,34 +1,31 @@
 @extends('accounts.teachers.base')
 
 @section('pageActions')
-    <span class="hidden sm:block">
-        <x-page-action-save form="createNewTeacher"></x-page-action-save>
-        <x-page-action-cancel :href="route('accounts.teachers.index')"></x-page-action-cancel>
+  <span class="hidden sm:block">
+        <x-page-actions.save form="createNewTeacher"/>
+        <x-page-actions.cancel :href="route('accounts.teachers.index')"/>
     </span>
 @endsection
 
-@section('body')
-    <x-page-section-white class="max-w-3xl">
-        <!-- Validation Errors -->
-        <x-validation-errors class="mb-4" :errors="$errors"/>
+@section('main')
+  <x-page-sections.base class="max-w-3xl">
+    <x-alerts.validation class="mb-4" :errors="$errors"/>
 
-        <form method=POST action="{{ route('accounts.teachers.store') }}" id="createNewTeacher">
-            @csrf
+    <x-forms.base :action="route('accounts.teachers.store')" id="createNewTeacher">
+      <div>
+        <x-forms.label for="role" :value="__('accounts::properties.role')"/>
+        <x-forms.select name="role" class="block mt-1 w-full" :selected="old('role')" :options="$roles" required autofocus/>
+      </div>
 
-            <div>
-                <x-label for="role">{{ __('accounts::auth.role') }}</x-label>
-                <x-select id="role" class="block mt-1 w-full" name="role" :selected="old('role')" :options="$roles" required autofocus />
-            </div>
+      <div class="mt-4">
+        <x-forms.label for="name" :value="__('accounts::properties.name')"/>
+        <x-forms.input name="name" type="text" class="block mt-1 w-full" required autofocus/>
+      </div>
 
-            <div class="mt-4">
-                <x-label for="name">{{ __('accounts::auth.name') }}</x-label>
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus/>
-            </div>
-
-            <div class="mt-4">
-                <x-label for="email">{{ __('accounts::auth.email') }}</x-label>
-                <x-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')" required autofocus/>
-            </div>
-        </form>
-    </x-page-section-white>
+      <div class="mt-4">
+        <x-forms.label for="email" :value="__('accounts::properties.email')"/>
+        <x-forms.input name="email" type="text" class="block mt-1 w-full" required autofocus/>
+      </div>
+    </x-forms.base>
+  </x-page-sections.base>
 @endsection

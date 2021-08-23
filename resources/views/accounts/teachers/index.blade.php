@@ -2,9 +2,10 @@
 
 @section('pageActions')
     <span class="hidden sm:block">
-        <x-page-action-create :href="route('accounts.teachers.create')"></x-page-action-create>
+        <x-page-actions.create :href="route('accounts.teachers.create')"></x-page-actions.create>
     </span>
 @endsection
 
-@section('body')
+@section('main')
+
 @endsection

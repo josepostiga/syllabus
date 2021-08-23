@@ -27,8 +27,8 @@ class TeachersController extends Controller
     public function create(): View
     {
         $teacherRoles = [
-            UserRolesEnum::HEADTEACHER => __('accounts::roles.headteacher'),
-            UserRolesEnum::TEACHER => __('accounts::roles.teacher'),
+            UserRolesEnum::HEADTEACHER => __('accounts::properties.roles.headteacher'),
+            UserRolesEnum::TEACHER => __('accounts::properties.roles.teacher'),
         ];
 
         return \view('accounts.teachers.create', [
@@ -44,6 +44,6 @@ class TeachersController extends Controller
         );
 
         return redirect(route('accounts.teachers.index'))
-            ->with('alert', __('accounts::actions.stored', ['id' => $newTeacher->name]));
+            ->with('message', __('messages.stored', ['resource' => $newTeacher->name]));
     }
 }

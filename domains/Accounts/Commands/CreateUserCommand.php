@@ -14,13 +14,13 @@ class CreateUserCommand extends Command
 
     public function handle(): int
     {
-        $name = $this->ask(__('accounts::auth.name'));
-        $email = $this->ask(__('accounts::auth.email'));
-        $role = $this->choice(__('accounts::auth.role'), [UserRolesEnum::DIRECTOR]);
+        $name = $this->ask(__('accounts::properties.name'));
+        $email = $this->ask(__('accounts::properties.email'));
+        $role = $this->choice(__('accounts::properties.role'), [UserRolesEnum::DIRECTOR]);
 
         $this->validate($name, $email, $role);
 
-        $this->info(__('accounts::auth.messages.user_without_password'));
+        $this->info(__('accounts::messages.info.user_without_password'));
 
         $user = new User([
             'name' => $name,
