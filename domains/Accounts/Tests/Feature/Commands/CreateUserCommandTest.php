@@ -19,9 +19,9 @@ class CreateUserCommandTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $this->artisan('accounts:create-user')
-            ->expectsQuestion(__('accounts::auth.name'), '')
-            ->expectsQuestion(__('accounts::auth.email'), '')
-            ->expectsChoice(__('accounts::auth.role'), UserRolesEnum::DIRECTOR, [UserRolesEnum::DIRECTOR]);
+            ->expectsQuestion(__('accounts::properties.name'), '')
+            ->expectsQuestion(__('accounts::properties.email'), '')
+            ->expectsChoice(__('accounts::properties.role'), UserRolesEnum::DIRECTOR, [UserRolesEnum::DIRECTOR]);
     }
 
     /** @test */
@@ -30,9 +30,9 @@ class CreateUserCommandTest extends TestCase
         $this->travelTo(now());
 
         $this->artisan('accounts:create-user')
-            ->expectsQuestion(__('accounts::auth.name'), $name = $this->faker->name)
-            ->expectsQuestion(__('accounts::auth.email'), $email = $this->faker->safeEmail)
-            ->expectsChoice(__('accounts::auth.role'), $role = UserRolesEnum::DIRECTOR, [UserRolesEnum::DIRECTOR])
+            ->expectsQuestion(__('accounts::properties.name'), $name = $this->faker->name)
+            ->expectsQuestion(__('accounts::properties.email'), $email = $this->faker->safeEmail)
+            ->expectsChoice(__('accounts::properties.role'), $role = UserRolesEnum::DIRECTOR, [UserRolesEnum::DIRECTOR])
             ->assertExitCode(0);
 
         $this->assertDatabaseHas('users', [

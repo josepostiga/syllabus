@@ -3,6 +3,7 @@
 namespace Tests\Unit\Layouts;
 
 use Domains\Accounts\Database\Factories\UserFactory;
+use Illuminate\View\ComponentAttributeBag;
 use Tests\TestCase;
 
 class NavigationTest extends TestCase
@@ -12,7 +13,7 @@ class NavigationTest extends TestCase
     {
         $director = UserFactory::new()->make();
 
-        $this->view('layouts.navigation', ['authenticatedUser' => $director])
+        $this->view('components.navigation.nav', ['authenticatedUser' => $director, 'attributes' => new ComponentAttributeBag()])
             ->assertSee(route('accounts.teachers.index'));
     }
 }

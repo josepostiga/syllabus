@@ -98,6 +98,6 @@ class ControllerStoreTest extends TestCase
             ->post(route('accounts.teachers.store'), $payload)
             ->assertSessionHasNoErrors()
             ->assertRedirect(route('accounts.teachers.index'))
-            ->assertSessionHas('alert');
+            ->assertSessionHas('message');
     }
 }
