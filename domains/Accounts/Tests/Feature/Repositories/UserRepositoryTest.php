@@ -2,6 +2,7 @@
 
 namespace Domains\Accounts\Tests\Feature\Repositories;
 
+use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Repositories\UserRepository;
 use Illuminate\Auth\Events\Registered;
@@ -41,5 +42,17 @@ class UserRepositoryTest extends TestCase
         ]);
 
         Event::assertDispatched(Registered::class, fn (Registered $event): bool => $event->user->is($newTeacher));
+    }
+
+    /** @test */
+    public function it_lists_teachers_accounts(): void
+    {
+        $teacher = UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create();
+        $headteacher = UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create();
+
+        $teachersList = $this->repository->listTeachers();
+
+        self::assertTrue($teachersList->contains($teacher));
+        self::assertTrue($teachersList->contains($headteacher));
     }
 }

@@ -12,16 +12,16 @@ use Illuminate\View\View;
 
 class TeachersController extends Controller
 {
-    private UserRepository $repository;
-
-    public function __construct(UserRepository $repository)
-    {
-        $this->repository = $repository;
+    public function __construct(
+        private UserRepository $repository
+    ) {
     }
 
     public function index(TeachersIndexRequest $request): View
     {
-        return \view('accounts.teachers.index');
+        return \view('accounts.teachers.index', [
+            'teachers' => $this->repository->listTeachers(),
+        ]);
     }
 
     public function create(): View

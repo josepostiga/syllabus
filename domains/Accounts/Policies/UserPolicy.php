@@ -20,4 +20,9 @@ class UserPolicy
     {
         return true;
     }
+
+    public function updateTeacherAccounts(): bool
+    {
+        return true;
+    }
 }

@@ -46,7 +46,7 @@ class ControllerStoreTest extends TestCase
     }
 
     /** @test */
-    public function it_renders_page(): void
+    public function it_renders_create_page(): void
     {
         $this->actingAs($this->director)
             ->get(route('accounts.teachers.create'))
@@ -83,7 +83,7 @@ class ControllerStoreTest extends TestCase
             'email' => $this->faker->safeEmail,
         ];
 
-        $this->mock(UserRepository::class, static function (MockInterface $mockedUserRepository) use ($payload) {
+        $this->mock(UserRepository::class, static function (MockInterface $mockedUserRepository) use ($payload): void {
             $mockedUserRepository->shouldReceive('storeTeacher')
                 ->with($payload['name'], $payload['email'])
                 ->andReturn(

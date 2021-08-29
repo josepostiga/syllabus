@@ -5,6 +5,7 @@ namespace Domains\Accounts\Repositories;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository
 {
@@ -15,6 +16,14 @@ class UserRepository
         event(new Registered($newTeacher));
 
         return $newTeacher;
+    }
+
+    /**
+     * @return Collection<User>
+     */
+    public function listTeachers(): Collection
+    {
+        return User::roles([UserRolesEnum::TEACHER, UserRolesEnum::HEADTEACHER])->get();
     }
 
     private function store(string $name, string $email, string $role): User

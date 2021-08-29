@@ -47,6 +47,14 @@ class UserModelTest extends TestCase
     }
 
     /** @test */
+    public function it_can_be_have_a_headteacher_role(): void
+    {
+        $this->model->role = UserRolesEnum::HEADTEACHER;
+
+        self::assertTrue($this->model->isHeadTeacher());
+    }
+
+    /** @test */
     public function it_implements_email_verification_contract(): void
     {
         self::assertInstanceOf(MustVerifyEmail::class, $this->model);

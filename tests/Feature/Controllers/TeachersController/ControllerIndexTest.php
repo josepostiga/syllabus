@@ -4,8 +4,11 @@ namespace Controllers\TeachersController;
 
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
+use Domains\Accounts\Repositories\UserRepository;
 use Domains\Accounts\Tests\Traits\UserRolesProvider;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery\MockInterface;
 use Tests\TestCase;
 
 class ControllerIndexTest extends TestCase
@@ -32,10 +35,21 @@ class ControllerIndexTest extends TestCase
     }
 
     /** @test */
-    public function it_renders_page(): void
+    public function it_lists_teachers(): void
     {
+        $teachersList = new Collection([
+            UserFactory::new()->role(UserRolesEnum::TEACHER)->make(),
+            UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->make(),
+        ]);
+
+        $this->mock(UserRepository::class, static function (MockInterface $mockedUserRepository) use ($teachersList): void {
+            $mockedUserRepository->shouldReceive('listTeachers')
+                ->andReturn($teachersList);
+        });
+
         $this->actingAs(UserFactory::new()->role(UserRolesEnum::DIRECTOR)->create())
             ->get(route('accounts.teachers.index'))
-            ->assertViewIs('accounts.teachers.index');
+            ->assertViewIs('accounts.teachers.index')
+            ->assertViewHas('teachers', $teachersList);
     }
 }
