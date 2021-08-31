@@ -8,6 +8,10 @@
 
 @section('main')
   <x-page-sections.base>
+    Search will go here...
+  </x-page-sections.base>
+
+  <x-page-sections.base>
     <x-tables.base
       :headers="[
         __('accounts::properties.name'),
@@ -20,10 +24,8 @@
       @foreach($teachers as $teacher)
         <x-tables.row>
           <x-tables.td>
-            {{ $teacher->name }}
-            <div class="text-sm text-gray-500">
-              {{ $teacher->email }}
-            </div>
+            <div>{{ $teacher->name }}</div>
+            <x-tables.td-context>{{ $teacher->email }}</x-tables.td-context>
           </x-tables.td>
           <x-tables.td>{{ __("accounts::properties.roles.{$teacher->role}") }}</x-tables.td>
           <x-tables.td>
