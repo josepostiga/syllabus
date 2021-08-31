@@ -31,6 +31,21 @@ class UserModelTest extends TestCase
     }
 
     /** @test */
+    public function it_uses_timestamps(): void
+    {
+        self::assertTrue($this->model->usesTimestamps());
+        self::assertEquals('created_at', $this->model->getCreatedAtColumn());
+        self::assertEquals('updated_at', $this->model->getUpdatedAtColumn());
+    }
+
+    /** @test */
+    public function it_uses_soft_delete(): void
+    {
+        self::assertTrue($this->isSoftDeletableModel($this->model));
+        self::assertEquals('deleted_at', $this->model->getDeletedAtColumn());
+    }
+
+    /** @test */
     public function it_can_be_have_a_director_role(): void
     {
         $this->model->role = UserRolesEnum::DIRECTOR;
