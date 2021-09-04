@@ -7,22 +7,22 @@
 >
     <testsuites>
         <testsuite name="Unit">
-            <directory>./tests/Unit</directory>
+            <directory>tests/Unit</directory>
         </testsuite>
         <testsuite name="Feature">
-            <directory>./tests/Feature</directory>
+            <directory>tests/Feature</directory>
         </testsuite>
         <testsuite name="Domains\Accounts">
-            <directory>./domains/Accounts/Tests</directory>
+            <directory>domains/Accounts/Tests</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">./app</directory>
-            <directory suffix=".php">./domains</directory>
+            <directory suffix=".php">app</directory>
+            <directory suffix=".php">domains</directory>
         </include>
         <exclude>
-            <directory>./domains</directory>
+            <directory>domains</directory>
         </exclude>
     </coverage>
     <php>
