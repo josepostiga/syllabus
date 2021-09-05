@@ -11,7 +11,7 @@
   <x-page-sections.base class="max-w-3xl">
     <x-alerts.validation class="mb-4" :errors="$errors"/>
 
-    <x-forms.base id="updateTeacher">
+    <x-forms.base method="PATCH" :action="route('accounts.teachers.update', $teacher)" id="updateTeacher">
       <div>
         <x-forms.label for="role" :value="__('accounts::properties.role')"/>
         <x-forms.select name="role" class="block mt-1 w-full" :selected="old('role', $teacher->role)" :options="$roles" required autofocus/>

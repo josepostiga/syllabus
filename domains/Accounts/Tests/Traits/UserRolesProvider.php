@@ -15,4 +15,13 @@ trait UserRolesProvider
             'Teacher' => [UserRolesEnum::TEACHER],
         ];
     }
+
+    public function invalidUserRolesForTeachers(): array
+    {
+        return [
+            'Director' => [UserRolesEnum::DIRECTOR],
+            'Parent' => [UserRolesEnum::PARENT],
+            'Student' => [UserRolesEnum::STUDENT],
+        ];
+    }
 }

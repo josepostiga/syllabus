@@ -9,13 +9,17 @@ use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository
 {
-    public function storeTeacher(string $name, string $email): User
+    public function storeTeacher(string $name, string $email, string $role): User
     {
-        $newTeacher = $this->store($name, $email, UserRolesEnum::TEACHER);
+        $teacher = User::create([
+            'name' => $name,
+            'email' => $email,
+            'role' => $role,
+        ]);
 
-        event(new Registered($newTeacher));
+        event(new Registered($teacher));
 
-        return $newTeacher;
+        return $teacher;
     }
 
     /**
@@ -26,12 +30,14 @@ class UserRepository
         return User::roles([UserRolesEnum::TEACHER, UserRolesEnum::HEADTEACHER])->get();
     }
 
-    private function store(string $name, string $email, string $role): User
+    public function updateTeacher(User $teacher, string $name, string $email, string $role): User
     {
-        return User::create([
+        $teacher->update([
             'name' => $name,
             'email' => $email,
             'role' => $role,
         ]);
+
+        return $teacher;
     }
 }

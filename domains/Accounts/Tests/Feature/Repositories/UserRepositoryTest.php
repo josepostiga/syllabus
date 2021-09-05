@@ -32,13 +32,14 @@ class UserRepositoryTest extends TestCase
 
         $name = $this->faker->name;
         $email = $this->faker->safeEmail;
+        $role = UserRolesEnum::TEACHER;
 
-        $newTeacher = $this->repository->storeTeacher($name, $email);
+        $newTeacher = $this->repository->storeTeacher($name, $email, $role);
 
         $this->assertDatabaseHas('users', [
             'name' => $name,
             'email' => $email,
-            'role' => UserRolesEnum::TEACHER,
+            'role' => $role,
         ]);
 
         Event::assertDispatched(Registered::class, fn (Registered $event): bool => $event->user->is($newTeacher));
@@ -54,5 +55,28 @@ class UserRepositoryTest extends TestCase
 
         self::assertTrue($teachersList->contains($teacher));
         self::assertTrue($teachersList->contains($headteacher));
+    }
+
+    /** @test */
+    public function it_updates_teachers_accounts(): void
+    {
+        $teacher = UserFactory::new()->role(UserRolesEnum::TEACHER)->create();
+
+        $updatedTeacher = $this->repository->updateTeacher(
+            $teacher,
+            $this->faker->name,
+            $this->faker->safeEmail,
+            UserRolesEnum::HEADTEACHER
+        );
+
+        // Check that we're working with the updated record
+        self::assertTrue($teacher->is($updatedTeacher));
+
+        $this->assertDatabaseHas('users', [
+            'id' => $updatedTeacher->id,
+            'name' => $updatedTeacher->name,
+            'email' => $updatedTeacher->email,
+            'role' => $updatedTeacher->role,
+        ]);
     }
 }

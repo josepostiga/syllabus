@@ -49,7 +49,7 @@ class ControllerStoreTest extends TestCase
     {
         $this->actingAs($this->director)
             ->post(route('accounts.teachers.store'))
-            ->assertSessionHasErrors(['name', 'email']);
+            ->assertSessionHasErrors(['name', 'email', 'role']);
     }
 
     /** @test */
@@ -59,11 +59,29 @@ class ControllerStoreTest extends TestCase
         $payload = [
             'name' => $this->faker->name,
             'email' => $this->director->email,
+            'role' => $this->director->role,
         ];
 
         $this->actingAs($this->director)
             ->post(route('accounts.teachers.store'), $payload)
             ->assertSessionHasErrors(['email']);
+    }
+
+    /**
+     * @test
+     * @dataProvider invalidUserRolesForTeachers
+     */
+    public function it_fails_to_store_teacher_with_invalid_role(string $role): void
+    {
+        $payload = [
+            'name' => $this->faker->name,
+            'email' => $this->faker->safeEmail,
+            'role' => $role,
+        ];
+
+        $this->actingAs($this->director)
+            ->post(route('accounts.teachers.store'), $payload)
+            ->assertSessionHasErrors(['role']);
     }
 
     /** @test */
@@ -72,16 +90,18 @@ class ControllerStoreTest extends TestCase
         $payload = [
             'name' => $this->faker->name,
             'email' => $this->faker->safeEmail,
+            'role' => UserRolesEnum::TEACHER,
         ];
 
         $this->mock(UserRepository::class)
             ->shouldReceive('storeTeacher')
             ->once()
-            ->with($payload['name'], $payload['email'])
+            ->with($payload['name'], $payload['email'], $payload['role'])
             ->andReturn(
                 new User([
                     'name' => $payload['name'],
                     'email' => $payload['email'],
+                    'role' => $payload['role'],
                 ])
             );
 

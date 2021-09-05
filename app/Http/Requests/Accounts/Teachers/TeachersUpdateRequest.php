@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Accounts\Teachers;
 
+use Domains\Accounts\Enums\UserRolesEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TeachersUpdateRequest extends FormRequest
 {
@@ -15,7 +17,12 @@ class TeachersUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:users'],
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($this->route('teacher')->id),
+            ],
+            'role' => ['required', 'in:'.UserRolesEnum::TEACHER.','.UserRolesEnum::HEADTEACHER],
         ];
     }
 }

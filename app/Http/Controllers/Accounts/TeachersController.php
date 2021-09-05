@@ -43,6 +43,7 @@ class TeachersController extends Controller
         $newTeacher = $this->repository->storeTeacher(
             $request->input('name'),
             $request->input('email'),
+            $request->input('role'),
         );
 
         return redirect(route('accounts.teachers.index'))
@@ -62,7 +63,14 @@ class TeachersController extends Controller
 
     public function update(TeachersUpdateRequest $request, User $teacher): RedirectResponse
     {
-        return redirect(route('accounts.teachers.show', $teacher))
-            ->with('message', __('messages.updated', ['resource' => $teacher->name]));
+        $updatedTeacher = $this->repository->updateTeacher(
+            $teacher,
+            $request->input('name'),
+            $request->input('email'),
+            $request->input('role'),
+        );
+
+        return redirect(route('accounts.teachers.show', $updatedTeacher))
+            ->with('message', __('messages.updated', ['resource' => $updatedTeacher->name]));
     }
 }
