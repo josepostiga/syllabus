@@ -46,14 +46,6 @@ class ControllerStoreTest extends TestCase
     }
 
     /** @test */
-    public function it_renders_create_page(): void
-    {
-        $this->actingAs($this->director)
-            ->get(route('accounts.teachers.create'))
-            ->assertViewIs('accounts.teachers.create');
-    }
-
-    /** @test */
     public function it_fails_to_store_teacher_with_invalid_input(): void
     {
         $this->actingAs($this->director)
