@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -33,24 +32,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function getRoleAttribute(string $role): string
-    {
-        return Str::lower($role);
-    }
-
     public function isDirector(): bool
     {
-        return $this->role === Str::lower(UserRolesEnum::DIRECTOR);
+        return $this->role === UserRolesEnum::DIRECTOR;
     }
 
     public function isTeacher(): bool
     {
-        return $this->role === Str::lower(UserRolesEnum::TEACHER);
+        return $this->role === UserRolesEnum::TEACHER;
     }
 
     public function isHeadTeacher(): bool
     {
-        return $this->role === Str::lower(UserRolesEnum::HEADTEACHER);
+        return $this->role === UserRolesEnum::HEADTEACHER;
     }
 
     public function scopeRoles(Builder $builder, array $roles): Builder

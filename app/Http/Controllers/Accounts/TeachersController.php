@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Accounts;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Accounts\Teachers\TeachersIndexRequest;
+use App\Http\Requests\Accounts\Teachers\TeachersShowRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersStoreRequest;
 use Domains\Accounts\Enums\UserRolesEnum;
+use Domains\Accounts\Models\User;
 use Domains\Accounts\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -26,13 +28,11 @@ class TeachersController extends Controller
 
     public function create(): View
     {
-        $teacherRoles = [
-            UserRolesEnum::HEADTEACHER => __('accounts::properties.roles.headteacher'),
-            UserRolesEnum::TEACHER => __('accounts::properties.roles.teacher'),
-        ];
-
         return \view('accounts.teachers.create', [
-            'roles' => $teacherRoles,
+            'roles' => [
+                UserRolesEnum::HEADTEACHER => __('accounts::properties.roles.headteacher'),
+                UserRolesEnum::TEACHER => __('accounts::properties.roles.teacher'),
+            ],
         ]);
     }
 
@@ -45,5 +45,16 @@ class TeachersController extends Controller
 
         return redirect(route('accounts.teachers.index'))
             ->with('message', __('messages.stored', ['resource' => $newTeacher->name]));
+    }
+
+    public function show(TeachersShowRequest $request, User $teacher): View
+    {
+        return view('accounts.teachers.show', [
+            'roles' => [
+                UserRolesEnum::HEADTEACHER => __('accounts::properties.roles.headteacher'),
+                UserRolesEnum::TEACHER => __('accounts::properties.roles.teacher'),
+            ],
+            'teacher' => $teacher,
+        ]);
     }
 }

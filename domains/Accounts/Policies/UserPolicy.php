@@ -21,6 +21,11 @@ class UserPolicy
         return true;
     }
 
+    public function showTeacherAccounts(): bool
+    {
+        return true;
+    }
+
     public function updateTeacherAccounts(): bool
     {
         return true;

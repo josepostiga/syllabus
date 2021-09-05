@@ -27,15 +27,15 @@
             <div>{{ $teacher->name }}</div>
             <x-tables.td-context>{{ $teacher->email }}</x-tables.td-context>
           </x-tables.td>
-          <x-tables.td>{{ __("accounts::properties.roles.{$teacher->role}") }}</x-tables.td>
+          <x-tables.td>{{ __('accounts::properties.roles.'.strtolower($teacher->role)) }}</x-tables.td>
           <x-tables.td>
             <x-tables.badge :condition="!$teacher->trashed()"/>
           </x-tables.td>
           <x-tables.td>{{ $teacher->created_at }}</x-tables.td>
           <x-tables.td>{{ $teacher->updated_at }}</x-tables.td>
           <x-tables.td>
-            @can('updateTeacherAccounts', $teacher)
-              <x-forms.link href="#" class="border hover:bg-gray-900 hover:text-white">Edit</x-forms.link>
+            @can('showTeacherAccounts', $teacher)
+              <x-forms.link :href="route('accounts.teachers.show', $teacher)" class="border hover:bg-gray-900 hover:text-white">Edit</x-forms.link>
             @endcan
           </x-tables.td>
         </x-tables.row>

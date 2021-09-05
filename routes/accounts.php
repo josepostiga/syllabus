@@ -9,6 +9,7 @@ Route::prefix('/accounts')
     ->middleware(['auth'])
     ->group(static function (Registrar $router) {
         $router->get('/teachers/create', [TeachersController::class, 'create'])->name('teachers.create');
+        $router->get('/teachers/{teacher}', [TeachersController::class, 'show'])->name('teachers.show');
         $router->post('/teachers', [TeachersController::class, 'store'])->name('teachers.store');
         $router->get('/teachers', [TeachersController::class, 'index'])->name('teachers.index');
     });
