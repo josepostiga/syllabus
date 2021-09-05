@@ -9,7 +9,6 @@ use Domains\Accounts\Repositories\UserRepository;
 use Domains\Accounts\Tests\Traits\UserRolesProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Mockery\MockInterface;
 use Tests\TestCase;
 
 class ControllerStoreTest extends TestCase
@@ -75,16 +74,16 @@ class ControllerStoreTest extends TestCase
             'email' => $this->faker->safeEmail,
         ];
 
-        $this->mock(UserRepository::class, static function (MockInterface $mockedUserRepository) use ($payload): void {
-            $mockedUserRepository->shouldReceive('storeTeacher')
-                ->with($payload['name'], $payload['email'])
-                ->andReturn(
-                    new User([
-                        'name' => $payload['name'],
-                        'email' => $payload['email'],
-                    ])
-                );
-        });
+        $this->mock(UserRepository::class)
+            ->shouldReceive('storeTeacher')
+            ->once()
+            ->with($payload['name'], $payload['email'])
+            ->andReturn(
+                new User([
+                    'name' => $payload['name'],
+                    'email' => $payload['email'],
+                ])
+            );
 
         $this->actingAs($this->director)
             ->post(route('accounts.teachers.store'), $payload)
