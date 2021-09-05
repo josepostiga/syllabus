@@ -1,7 +1,4 @@
-@props([
-  'action' => '',
-  'method' => 'POST'
-])
+@props(['action' => '', 'method' => 'POST'])
 
 @php
   $realMethod = null;

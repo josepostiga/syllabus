@@ -8,7 +8,7 @@
 @endsection
 
 @section('main')
-  <x-page-sections.base class="max-w-3xl">
+  <x-page-sections.base class="max-w-3xl p-6">
     <x-alerts.validation class="mb-4" :errors="$errors"/>
 
     <x-forms.base :action="route('accounts.teachers.store')" id="createNewTeacher">

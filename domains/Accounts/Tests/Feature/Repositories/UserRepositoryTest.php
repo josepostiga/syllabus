@@ -79,4 +79,16 @@ class UserRepositoryTest extends TestCase
             'role' => $updatedTeacher->role,
         ]);
     }
+
+    /** @test */
+    public function it_deletes_teacher(): void
+    {
+        $teacher = UserFactory::new()->role(UserRolesEnum::TEACHER)->create();
+
+        self::assertTrue($this->repository->deleteTeacher($teacher));
+
+        $this->assertSoftDeleted('users', [
+            'id' => $teacher->id,
+        ]);
+    }
 }

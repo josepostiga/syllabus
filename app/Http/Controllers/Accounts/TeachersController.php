@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Accounts;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Accounts\Teachers\TeachersCreateRequest;
+use App\Http\Requests\Accounts\Teachers\TeachersDeleteRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersIndexRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersShowRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersStoreRequest;
@@ -72,5 +73,13 @@ class TeachersController extends Controller
 
         return redirect(route('accounts.teachers.show', $updatedTeacher))
             ->with('message', __('messages.updated', ['resource' => $updatedTeacher->name]));
+    }
+
+    public function delete(TeachersDeleteRequest $request, User $teacher): RedirectResponse
+    {
+        $this->repository->deleteTeacher($teacher);
+
+        return redirect(route('accounts.teachers.index'))
+            ->with('message', __('messages.deleted', ['resource' => $teacher->name]));
     }
 }

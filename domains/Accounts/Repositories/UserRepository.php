@@ -40,4 +40,9 @@ class UserRepository
 
         return $teacher;
     }
+
+    public function deleteTeacher(User $teacher): ?bool
+    {
+        return $teacher->delete();
+    }
 }

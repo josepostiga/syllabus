@@ -1,4 +1,4 @@
-<x-forms.link class="font-semibold text-gray-600 hover:text-gray-900" {{ $attributes }}>
+<x-forms.link class="font-semibold text-gray-800 hover:text-gray-900" {{ $attributes }}>
   <!-- Heroicon name: solid/x -->
   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
     <path fill-rule="evenodd"

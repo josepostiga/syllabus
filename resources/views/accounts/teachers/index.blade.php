@@ -7,7 +7,7 @@
 @endsection
 
 @section('main')
-  <x-page-sections.base>
+  <x-page-sections.base class="p-6">
     Search will go here...
   </x-page-sections.base>
 
@@ -33,9 +33,16 @@
           </x-tables.td>
           <x-tables.td>{{ $teacher->created_at }}</x-tables.td>
           <x-tables.td>{{ $teacher->updated_at }}</x-tables.td>
-          <x-tables.td>
+          <x-tables.td class="space-x-2">
             @can('showTeacherAccounts', $teacher)
-              <x-forms.link :href="route('accounts.teachers.show', $teacher)" class="border hover:bg-gray-900 hover:text-white">Edit</x-forms.link>
+              <x-forms.link :href="route('accounts.teachers.show', $teacher)" class="border rounded-md hover:bg-gray-700 hover:text-white">
+                {{ __('actions.edit') }}
+              </x-forms.link>
+            @endcan
+            @can('deleteTeacherAccounts', $teacher)
+              <x-forms.delete :action="route('accounts.teachers.delete', $teacher)">
+                {{ __('actions.delete') }}
+              </x-forms.delete>
             @endcan
           </x-tables.td>
         </x-tables.row>

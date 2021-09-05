@@ -25,4 +25,9 @@ class UserPolicy
     {
         return $authenticatedUser->isDirector() && $authenticatedUser->isNot($teacher);
     }
+
+    public function deleteTeacherAccounts(User $authenticatedUser, User $teacher): bool
+    {
+        return $authenticatedUser->isDirector() && $authenticatedUser->isNot($teacher);
+    }
 }

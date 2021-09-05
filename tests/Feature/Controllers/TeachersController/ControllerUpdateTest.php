@@ -50,7 +50,7 @@ class ControllerUpdateTest extends TestCase
     public function it_forbids_access_to_route_if_accessed_records_is_the_authenticated_user(): void
     {
         $this->actingAs($this->director)
-            ->patch(route('accounts.teachers.show', $this->director))
+            ->patch(route('accounts.teachers.update', $this->director))
             ->assertForbidden();
     }
 
