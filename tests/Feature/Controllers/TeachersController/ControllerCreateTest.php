@@ -37,7 +37,7 @@ class ControllerCreateTest extends TestCase
     public function it_forbids_access_to_route_to_unauthorized_user_roles(string $role): void
     {
         $this->actingAs(UserFactory::new()->role($role)->create())
-            ->get(route('accounts.teachers.store'))
+            ->get(route('accounts.teachers.create'))
             ->assertForbidden();
     }
 

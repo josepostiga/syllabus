@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers\TeachersController;
+namespace Tests\Feature\Controllers\TeachersController;
 
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
@@ -38,8 +38,8 @@ class ControllerIndexTest extends TestCase
     public function it_lists_teachers(): void
     {
         $teachersList = new Collection([
-            UserFactory::new()->role(UserRolesEnum::TEACHER)->make(),
-            UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->make(),
+            UserFactory::new()->role(UserRolesEnum::TEACHER)->create(),
+            UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create(),
         ]);
 
         $this->mock(UserRepository::class, static function (MockInterface $mockedUserRepository) use ($teachersList): void {

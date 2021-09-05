@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Accounts;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Accounts\Teachers\TeachersCreateRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersIndexRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersShowRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersStoreRequest;
@@ -21,14 +22,14 @@ class TeachersController extends Controller
 
     public function index(TeachersIndexRequest $request): View
     {
-        return \view('accounts.teachers.index', [
+        return view('accounts.teachers.index', [
             'teachers' => $this->repository->listTeachers(),
         ]);
     }
 
-    public function create(): View
+    public function create(TeachersCreateRequest $request): View
     {
-        return \view('accounts.teachers.create', [
+        return view('accounts.teachers.create', [
             'roles' => [
                 UserRolesEnum::HEADTEACHER => __('accounts::properties.roles.headteacher'),
                 UserRolesEnum::TEACHER => __('accounts::properties.roles.teacher'),
