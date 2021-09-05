@@ -6,28 +6,23 @@ use Domains\Accounts\Models\User;
 
 class UserPolicy
 {
-    public function before(User $authenticatedUser): ?bool
+    public function listTeacherAccounts(User $authenticatedUser): bool
     {
         return $authenticatedUser->isDirector();
     }
 
-    public function listTeacherAccounts(): bool
+    public function createTeacherAccounts(User $authenticatedUser): bool
     {
-        return true;
+        return $authenticatedUser->isDirector();
     }
 
-    public function createTeacherAccounts(): bool
+    public function showTeacherAccounts(User $authenticatedUser, User $teacher): bool
     {
-        return true;
+        return $authenticatedUser->isDirector() && $authenticatedUser->isNot($teacher);
     }
 
-    public function showTeacherAccounts(): bool
+    public function updateTeacherAccounts(User $authenticatedUser, User $teacher): bool
     {
-        return true;
-    }
-
-    public function updateTeacherAccounts(): bool
-    {
-        return true;
+        return $authenticatedUser->isDirector() && $authenticatedUser->isNot($teacher);
     }
 }

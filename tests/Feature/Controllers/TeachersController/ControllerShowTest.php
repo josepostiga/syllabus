@@ -44,6 +44,14 @@ class ControllerShowTest extends TestCase
     }
 
     /** @test */
+    public function it_forbids_access_to_route_if_accessed_records_is_the_authenticated_user(): void
+    {
+        $this->actingAs($this->director)
+            ->get(route('accounts.teachers.show', $this->director))
+            ->assertForbidden();
+    }
+
+    /** @test */
     public function it_renders_page(): void
     {
         $this->actingAs($this->director)

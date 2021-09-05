@@ -7,6 +7,7 @@ use App\Http\Requests\Accounts\Teachers\TeachersCreateRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersIndexRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersShowRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersStoreRequest;
+use App\Http\Requests\Accounts\Teachers\TeachersUpdateRequest;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
 use Domains\Accounts\Repositories\UserRepository;
@@ -57,5 +58,11 @@ class TeachersController extends Controller
             ],
             'teacher' => $teacher,
         ]);
+    }
+
+    public function update(TeachersUpdateRequest $request, User $teacher): RedirectResponse
+    {
+        return redirect(route('accounts.teachers.show', $teacher))
+            ->with('message', __('messages.updated', ['resource' => $teacher->name]));
     }
 }

@@ -15,18 +15,20 @@ class ControllerUpdateTest extends TestCase
     use RefreshDatabase;
 
     private User $director;
+    private User $teacher;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->director = UserFactory::new()->role(UserRolesEnum::DIRECTOR)->create();
+        $this->teacher = UserFactory::new()->role(UserRolesEnum::TEACHER)->create();
     }
 
     /** @test */
     public function it_protects_access_to_route_to_authenticated_users(): void
     {
-        $this->get(route('accounts.teachers.store'))
+        $this->patch(route('accounts.teachers.update', $this->teacher))
             ->assertRedirect(route('login'));
     }
 
@@ -36,18 +38,28 @@ class ControllerUpdateTest extends TestCase
      */
     public function it_forbids_access_to_route_to_unauthorized_user_roles(string $role): void
     {
-        $this->actingAs($this->director)
-            ->post(route('accounts.teachers.store'))
+        $this->actingAs(UserFactory::new()->role($role)->create())
+            ->patch(route('accounts.teachers.update', $this->teacher))
             ->assertForbidden();
     }
 
     /** @test */
-    public function it_renders_show_page(): void
+    public function it_forbids_access_to_route_if_accessed_records_is_the_authenticated_user(): void
     {
-        $teacher = UserFactory::new()->role(UserRolesEnum::TEACHER)->create();
+        $this->actingAs($this->director)
+            ->patch(route('accounts.teachers.show', $this->director))
+            ->assertForbidden();
+    }
 
-        $this->actingAs(UserFactory::new()->role(UserRolesEnum::DIRECTOR)->create())
-            ->get(route('accounts.teachers.show', $teacher))
-            ->assertViewIs('accounts.teachers.show');
+    /** @test */
+    public function it_updates_teacher(): void
+    {
+        $payload = [];
+
+        $this->actingAs($this->director)
+            ->patch(route('accounts.teachers.update', $this->teacher), $payload)
+            ->assertSessionHasNoErrors()
+            ->assertRedirect(route('accounts.teachers.show', $this->teacher))
+            ->assertSessionHas('message');
     }
 }
