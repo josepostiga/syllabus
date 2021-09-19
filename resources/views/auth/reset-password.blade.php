@@ -1,4 +1,5 @@
 <x-auth-layout>
+  <x-alerts.simple class="mb-4" :message="session('status')"/>
   <x-alerts.validation class="mb-4" :errors="$errors"/>
 
   <x-forms.base :action="route('password.update')">
