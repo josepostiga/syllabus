@@ -71,12 +71,12 @@ class ControllerStoreTest extends TestCase
      * @test
      * @dataProvider invalidUserRolesForTeachers
      */
-    public function it_fails_to_store_teacher_with_invalid_role(string $role): void
+    public function it_fails_to_store_teacher_with_invalid_role(string $invalidRole): void
     {
         $payload = [
             'name' => $this->faker->name,
             'email' => $this->faker->safeEmail,
-            'role' => $role,
+            'role' => $invalidRole,
         ];
 
         $this->actingAs($this->director)
