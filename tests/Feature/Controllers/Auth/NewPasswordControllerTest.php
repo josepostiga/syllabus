@@ -12,11 +12,11 @@ class NewPasswordControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_password_can_be_reset_with_valid_token(): void
+    public function test_password_can_be_reset_with_valid_token_and_email_is_validate(): void
     {
         Notification::fake();
 
-        $user = UserFactory::new()->create();
+        $user = UserFactory::new()->unverified()->create();
 
         $this->post(route('password.request'), ['email' => $user->email]);
 
@@ -28,6 +28,8 @@ class NewPasswordControllerTest extends TestCase
                 'password_confirmation' => 'password',
             ])
                 ->assertSessionHasNoErrors();
+
+            self::assertTrue($user->fresh()->hasVerifiedEmail());
 
             return true;
         });

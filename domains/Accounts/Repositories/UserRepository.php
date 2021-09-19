@@ -4,7 +4,7 @@ namespace Domains\Accounts\Repositories;
 
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
-use Illuminate\Auth\Events\Registered;
+use Domains\Accounts\Notifications\AccountCreatedNotification;
 use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository
@@ -17,7 +17,7 @@ class UserRepository
             'role' => $role,
         ]);
 
-        event(new Registered($teacher));
+        $teacher->notify(new AccountCreatedNotification());
 
         return $teacher;
     }

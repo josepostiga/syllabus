@@ -4,11 +4,11 @@ namespace Domains\Accounts\Tests\Feature\Repositories;
 
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
+use Domains\Accounts\Notifications\AccountCreatedNotification;
 use Domains\Accounts\Repositories\UserRepository;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class UserRepositoryTest extends TestCase
@@ -26,9 +26,9 @@ class UserRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function it_stores_teacher_accounts_and_sends_confirmation_email(): void
+    public function it_stores_teacher_accounts_and_dispatches_registered_event(): void
     {
-        Event::fake([Registered::class]);
+        Notification::fake();
 
         $name = $this->faker->name;
         $email = $this->faker->safeEmail;
@@ -42,7 +42,7 @@ class UserRepositoryTest extends TestCase
             'role' => $role,
         ]);
 
-        Event::assertDispatched(Registered::class, fn (Registered $event): bool => $event->user->is($newTeacher));
+        Notification::assertSentTo($newTeacher, AccountCreatedNotification::class);
     }
 
     /** @test */

@@ -1,6 +1,5 @@
 <?php
 
-use Domains\Accounts\Enums\UserRolesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -12,11 +11,11 @@ class AddStudentTeacherAndParentRoleToUsersTable extends Migration
     {
         Schema::table('users', static function (Blueprint $table) {
             $table->enum('new_role', [
-                UserRolesEnum::DIRECTOR,
-                UserRolesEnum::HEADTEACHER,
-                UserRolesEnum::PARENT,
-                UserRolesEnum::STUDENT,
-                UserRolesEnum::TEACHER,
+                'DIRECTOR',
+                'HEADTEACHER',
+                'PARENT',
+                'STUDENT',
+                'TEACHER',
             ])->nullable();
         });
 
