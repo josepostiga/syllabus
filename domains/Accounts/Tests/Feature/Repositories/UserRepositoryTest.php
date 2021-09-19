@@ -28,7 +28,7 @@ class UserRepositoryTest extends TestCase
     /** @test */
     public function it_stores_teacher_accounts_and_sends_confirmation_email(): void
     {
-        Event::fake();
+        Event::fake([Registered::class]);
 
         $name = $this->faker->name;
         $email = $this->faker->safeEmail;
