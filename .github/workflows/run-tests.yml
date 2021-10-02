@@ -37,6 +37,11 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-suggest
 
+      - name: Activate framework
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
       - name: Run tests
         run: php artisan test --parallel --coverage-clover build/logs/clover.xml
 
