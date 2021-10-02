@@ -6,14 +6,13 @@
          cacheResult="false"
 >
     <testsuites>
-        <testsuite name="Unit">
+        <testsuite name="app">
             <directory>tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Feature">
             <directory>tests/Feature</directory>
         </testsuite>
         <testsuite name="Domains\Accounts">
-            <directory>domains/Accounts/Tests</directory>
+            <directory>domains/Accounts/Tests/Unit</directory>
+            <directory>domains/Accounts/Tests/Feature</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">

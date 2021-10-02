@@ -1,11 +1,13 @@
 <?php
 
-namespace Domains\Accounts\Tests\Traits;
+namespace Domains\Accounts\Tests\DataProviders;
 
 use Domains\Accounts\Enums\UserRolesEnum;
+use JetBrains\PhpStorm\ArrayShape;
 
-trait UserRolesProvider
+trait UserRolesDataProvider
 {
+    #[ArrayShape(['Headteacher' => 'array', 'Parent' => 'array', 'Student' => 'array', 'Teacher' => 'array'])]
     public function unauthorizedUserRolesToHandleTeachers(): array
     {
         return [
@@ -16,6 +18,7 @@ trait UserRolesProvider
         ];
     }
 
+    #[ArrayShape(['Director' => 'array', 'Parent' => 'array', 'Student' => 'array'])]
     public function invalidUserRolesForTeachers(): array
     {
         return [

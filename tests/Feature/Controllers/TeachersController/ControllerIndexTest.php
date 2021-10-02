@@ -5,7 +5,7 @@ namespace Tests\Feature\Controllers\TeachersController;
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Repositories\UserRepository;
-use Domains\Accounts\Tests\Traits\UserRolesProvider;
+use Domains\Accounts\Tests\DataProviders\UserRolesDataProvider;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery\MockInterface;
@@ -14,7 +14,7 @@ use Tests\TestCase;
 class ControllerIndexTest extends TestCase
 {
     use RefreshDatabase;
-    use UserRolesProvider;
+    use UserRolesDataProvider;
 
     /** @test */
     public function it_protects_access_to_route_to_authenticated_users(): void
