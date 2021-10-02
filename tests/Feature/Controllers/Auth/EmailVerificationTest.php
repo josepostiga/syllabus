@@ -6,7 +6,6 @@ use App\Providers\RouteServiceProvider;
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Models\User;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +15,6 @@ use function route;
 
 class EmailVerificationTest extends TestCase
 {
-    use RefreshDatabase;
-
     private User $unverifiedUser;
 
     protected function setUp(): void

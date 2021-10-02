@@ -4,13 +4,10 @@ namespace Tests\Feature\Controllers\Auth;
 
 use Domains\Accounts\Database\Factories\UserFactory;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function login_screen_can_be_rendered(): void
     {

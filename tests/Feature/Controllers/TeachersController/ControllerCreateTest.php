@@ -6,12 +6,10 @@ use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
 use Domains\Accounts\Tests\DataProviders\UserRolesDataProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ControllerCreateTest extends TestCase
 {
-    use RefreshDatabase;
     use UserRolesDataProvider;
 
     private User $director;

@@ -4,15 +4,12 @@ namespace Tests\Feature\Controllers\Auth;
 
 use Domains\Accounts\Database\Factories\UserFactory;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class PasswordResetLinkControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function test_reset_password_link_screen_can_be_rendered(): void
     {
         $this->get(route('password.request'))

@@ -4,15 +4,12 @@ namespace Tests\Feature\Controllers\Auth;
 
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use function route;
 
 class PasswordConfirmationTest extends TestCase
 {
-    use RefreshDatabase;
-
     private User $user;
 
     protected function setUp(): void

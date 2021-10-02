@@ -7,13 +7,11 @@ use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
 use Domains\Accounts\Repositories\UserRepository;
 use Domains\Accounts\Tests\DataProviders\UserRolesDataProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ControllerStoreTest extends TestCase
 {
-    use RefreshDatabase;
     use UserRolesDataProvider;
     use WithFaker;
 

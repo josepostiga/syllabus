@@ -3,14 +3,12 @@
 namespace Domains\Accounts\Tests\Feature\Commands;
 
 use Domains\Accounts\Enums\UserRolesEnum;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class CreateUserCommandTest extends TestCase
 {
-    use RefreshDatabase;
     use WithFaker;
 
     /** @test */

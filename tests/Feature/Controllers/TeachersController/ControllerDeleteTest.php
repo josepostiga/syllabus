@@ -7,14 +7,12 @@ use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
 use Domains\Accounts\Repositories\UserRepository;
 use Domains\Accounts\Tests\DataProviders\UserRolesDataProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ControllerDeleteTest extends TestCase
 {
     use UserRolesDataProvider;
-    use RefreshDatabase;
     use WithFaker;
 
     private User $director;

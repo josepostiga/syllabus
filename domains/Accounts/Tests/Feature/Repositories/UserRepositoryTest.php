@@ -6,14 +6,12 @@ use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Notifications\AccountCreatedNotification;
 use Domains\Accounts\Repositories\UserRepository;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class UserRepositoryTest extends TestCase
 {
-    use RefreshDatabase;
     use WithFaker;
 
     private UserRepository $repository;
