@@ -32,11 +32,21 @@ class UserRepository
 
     public function updateTeacher(User $teacher, string $name, string $email, string $role): User
     {
-        $teacher->update([
+        $teacher->fill([
             'name' => $name,
             'email' => $email,
             'role' => $role,
         ]);
+
+        if ($teacher->isDirty(['email'])) {
+            $teacher->forceFill(['email_verified_at' => null]);
+        }
+
+        $teacher->update();
+
+        if (!$teacher->hasVerifiedEmail()) {
+            $teacher->sendEmailVerificationNotification();
+        }
 
         return $teacher;
     }

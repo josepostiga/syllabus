@@ -6,6 +6,7 @@ use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Notifications\AccountCreatedNotification;
 use Domains\Accounts\Repositories\UserRepository;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -88,5 +89,22 @@ class UserRepositoryTest extends TestCase
         $this->assertSoftDeleted('users', [
             'id' => $teacher->id,
         ]);
+    }
+
+    /** @test */
+    public function it_send_email_validation_notification_when_teacher_updates_email(): void
+    {
+        Notification::fake();
+
+        $teacher = UserFactory::new()->create();
+
+        $this->repository->updateTeacher(
+            $teacher,
+            $teacher->name,
+            $this->faker->safeEmail,
+            $teacher->role,
+        );
+
+        Notification::assertSentTo($teacher, VerifyEmail::class);
     }
 }
