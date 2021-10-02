@@ -38,7 +38,7 @@ jobs:
         run: composer install --no-interaction --no-suggest
 
       - name: Run tests
-        run: artisan test --parallel --coverage-clover build/logs/clover.xml
+        run: php artisan test --parallel --coverage-clover build/logs/clover.xml
 
       - name: Compile code coverage
         run: vendor/bin/php-coveralls -v
