@@ -24,8 +24,14 @@ class TeachersController extends Controller
 
     public function index(TeachersIndexRequest $request): View
     {
+        $teachers = $request->whenFilled(
+            'search',
+            fn (string $search) => $this->repository->searchTeachers($search),
+            fn () => $this->repository->listTeachers()
+        );
+
         return view('accounts.teachers.index', [
-            'teachers' => $this->repository->listTeachers(),
+            'teachers' => $teachers,
         ]);
     }
 

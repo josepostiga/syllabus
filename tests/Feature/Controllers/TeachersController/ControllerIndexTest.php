@@ -50,4 +50,18 @@ class ControllerIndexTest extends TestCase
             ->assertViewIs('accounts.teachers.index')
             ->assertViewHas('teachers', $teachersList);
     }
+
+    /** @test */
+    public function it_filters_teachers_when_search_query_param_is_non_empty(): void
+    {
+        $this->mock(UserRepository::class, static function (MockInterface $mockedUserRepository): void {
+            $mockedUserRepository->shouldReceive('searchTeachers')
+                ->with('search-string')
+                ->andReturn(new Collection());
+        });
+
+        $this->actingAs(UserFactory::new()->role(UserRolesEnum::DIRECTOR)->create())
+            ->get(route('accounts.teachers.index', ['search' => 'search-string']))
+            ->assertSuccessful();
+    }
 }

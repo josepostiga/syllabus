@@ -5,6 +5,7 @@ namespace Domains\Accounts\Repositories;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
 use Domains\Accounts\Notifications\AccountCreatedNotification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository
@@ -54,5 +55,28 @@ class UserRepository
     public function deleteTeacher(User $teacher): ?bool
     {
         return $teacher->delete();
+    }
+
+    /**
+     * @return Collection<User>
+     */
+    public function searchTeachers(string $search): Collection
+    {
+        return $this->search(
+            [
+                'roles' => [UserRolesEnum::TEACHER, UserRolesEnum::HEADTEACHER],
+                'search' => $search,
+            ]
+        );
+    }
+
+    /**
+     * @return Collection<User>
+     */
+    private function search(array $data): Collection
+    {
+        return User::when($data['roles'], static fn (Builder $users, array $role) => $users->roles($role))
+            ->when($data['search'], static fn (Builder $users, string $search) => $users->search($search))
+            ->get();
     }
 }

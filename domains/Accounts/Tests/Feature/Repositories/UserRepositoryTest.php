@@ -107,4 +107,30 @@ class UserRepositoryTest extends TestCase
 
         Notification::assertSentTo($teacher, VerifyEmail::class);
     }
+
+    /** @test */
+    public function it_filters_teachers_by_name(): void
+    {
+        $teacher1 = UserFactory::new()->role(UserRolesEnum::TEACHER)->create(['name' => 'Teacher 1']);
+        $teacher2 = UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create(['name' => 'Teacher 2']);
+
+        $filteredTeachers = $this->repository->searchTeachers('Teacher 1');
+
+        self::assertCount(1, $filteredTeachers);
+        self::assertTrue($filteredTeachers->contains('name', '=', $teacher1->name));
+        self::assertFalse($filteredTeachers->contains('name', '=', $teacher2->name));
+    }
+
+    /** @test */
+    public function it_filters_teachers_by_email(): void
+    {
+        $teacher1 = UserFactory::new()->role(UserRolesEnum::TEACHER)->create(['email' => 'teacher1@getsyllabus.app']);
+        $teacher2 = UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create(['email' => 'teacher2@getsyllabus.app']);
+
+        $filteredTeachers = $this->repository->searchTeachers('teacher1@getsyllabus.app');
+
+        self::assertCount(1, $filteredTeachers);
+        self::assertTrue($filteredTeachers->contains('email', '=', $teacher1->email));
+        self::assertFalse($filteredTeachers->contains('email', '=', $teacher2->email));
+    }
 }
