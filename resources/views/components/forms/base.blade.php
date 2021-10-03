@@ -9,7 +9,7 @@
 @endphp
 
 <form action="{{ $action }}" method="{{ $method }}" {{ $attributes }}>
-  @csrf
+  @if($method !== 'GET') @csrf @endif
   @if ($realMethod) @method($realMethod) @endif
 
   {{ $slot }}
