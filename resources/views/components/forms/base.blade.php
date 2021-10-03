@@ -2,7 +2,7 @@
 
 @php
   $realMethod = null;
-  if (strtoupper($method) !== 'POST') {
+  if (!in_array(strtoupper($method), ['POST', 'GET'])) {
     $realMethod = $method;
     $method = 'POST';
   }

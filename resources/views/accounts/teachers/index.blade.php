@@ -7,8 +7,8 @@
 @endsection
 
 @section('main')
-  <x-page-sections.base class="p-6">
-    Search will go here...
+  <x-page-sections.base>
+    <x-forms.search :action="route('accounts.teachers.index')"/>
   </x-page-sections.base>
 
   <x-page-sections.base>
