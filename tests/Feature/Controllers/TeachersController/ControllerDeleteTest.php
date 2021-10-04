@@ -56,7 +56,7 @@ class ControllerDeleteTest extends TestCase
     public function it_deletes_teacher(): void
     {
         $this->mock(TeacherRepository::class)
-            ->shouldReceive('deleteTeacher')
+            ->shouldReceive('delete')
             ->once()
             ->with(
                 \Mockery::on(fn (User $teacherToUpdate) => $teacherToUpdate->is($this->teacher))

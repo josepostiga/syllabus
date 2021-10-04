@@ -93,7 +93,7 @@ class ControllerUpdateTest extends TestCase
         ];
 
         $this->mock(TeacherRepository::class)
-            ->shouldReceive('updateTeacher')
+            ->shouldReceive('update')
             ->once()
             ->with(
                 \Mockery::on(fn (User $teacherToUpdate) => $teacherToUpdate->is($this->teacher)),

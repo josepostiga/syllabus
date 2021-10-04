@@ -6,7 +6,6 @@ use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
 use Domains\Accounts\Notifications\AccountCreatedNotification;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Collection;
 
 class TeacherRepository
 {
@@ -55,13 +54,10 @@ class TeacherRepository
         return $teacher->delete();
     }
 
-    /**
-     * @return Collection<User>
-     */
-    public function search(string $search): Collection
+    public function search(string $search, $recordsPerPage = 15): Paginator
     {
         return User::roles([UserRolesEnum::TEACHER, UserRolesEnum::HEADTEACHER])
             ->search($search)
-            ->get();
+            ->paginate($recordsPerPage);
     }
 }

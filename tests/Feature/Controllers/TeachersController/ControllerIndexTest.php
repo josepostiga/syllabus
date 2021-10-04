@@ -6,8 +6,7 @@ use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Repositories\TeacherRepository;
 use Domains\Accounts\Tests\DataProviders\UserRolesDataProvider;
-use Illuminate\Database\Eloquent\Collection;
-use Mockery\MockInterface;
+use Illuminate\Pagination\Paginator;
 use Tests\TestCase;
 
 class ControllerIndexTest extends TestCase
@@ -35,15 +34,14 @@ class ControllerIndexTest extends TestCase
     /** @test */
     public function it_lists_teachers(): void
     {
-        $teachersList = new Collection([
+        $teachersList = new Paginator([
             UserFactory::new()->role(UserRolesEnum::TEACHER)->create(),
             UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create(),
-        ]);
+        ], 15);
 
-        $this->mock(TeacherRepository::class, static function (MockInterface $mockedUserRepository) use ($teachersList): void {
-            $mockedUserRepository->shouldReceive('listTeachers')
-                ->andReturn($teachersList);
-        });
+        $this->mock(TeacherRepository::class)
+            ->shouldReceive('list')
+            ->andReturn($teachersList);
 
         $this->actingAs(UserFactory::new()->role(UserRolesEnum::DIRECTOR)->create())
             ->get(route('accounts.teachers.index'))
@@ -54,11 +52,10 @@ class ControllerIndexTest extends TestCase
     /** @test */
     public function it_filters_teachers_when_search_query_param_is_non_empty(): void
     {
-        $this->mock(TeacherRepository::class, static function (MockInterface $mockedUserRepository): void {
-            $mockedUserRepository->shouldReceive('searchTeachers')
-                ->with('search-string')
-                ->andReturn(new Collection());
-        });
+        $this->mock(TeacherRepository::class)
+            ->shouldReceive('search')
+            ->with('search-string')
+            ->andReturn(new Paginator([], 15));
 
         $this->actingAs(UserFactory::new()->role(UserRolesEnum::DIRECTOR)->create())
             ->get(route('accounts.teachers.index', ['search' => 'search-string']))

@@ -92,7 +92,7 @@ class ControllerStoreTest extends TestCase
         ];
 
         $this->mock(TeacherRepository::class)
-            ->shouldReceive('storeTeacher')
+            ->shouldReceive('store')
             ->once()
             ->with($payload['name'], $payload['email'], $payload['role'])
             ->andReturn(
