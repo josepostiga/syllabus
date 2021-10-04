@@ -11,14 +11,14 @@ use App\Http\Requests\Accounts\Teachers\TeachersStoreRequest;
 use App\Http\Requests\Accounts\Teachers\TeachersUpdateRequest;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
-use Domains\Accounts\Repositories\UserRepository;
+use Domains\Accounts\Repositories\TeacherRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class TeachersController extends Controller
 {
     public function __construct(
-        private UserRepository $repository
+        private TeacherRepository $repository
     ) {
     }
 
@@ -26,8 +26,8 @@ class TeachersController extends Controller
     {
         $teachers = $request->whenFilled(
             'search',
-            fn (string $search) => $this->repository->searchTeachers($search),
-            fn () => $this->repository->listTeachers()
+            fn (string $search) => $this->repository->search($search),
+            fn () => $this->repository->list()
         );
 
         return view('accounts.teachers.index', [
@@ -47,7 +47,7 @@ class TeachersController extends Controller
 
     public function store(TeachersStoreRequest $request): RedirectResponse
     {
-        $newTeacher = $this->repository->storeTeacher(
+        $newTeacher = $this->repository->store(
             $request->input('name'),
             $request->input('email'),
             $request->input('role'),
@@ -70,7 +70,7 @@ class TeachersController extends Controller
 
     public function update(TeachersUpdateRequest $request, User $teacher): RedirectResponse
     {
-        $updatedTeacher = $this->repository->updateTeacher(
+        $updatedTeacher = $this->repository->update(
             $teacher,
             $request->input('name'),
             $request->input('email'),
@@ -83,7 +83,7 @@ class TeachersController extends Controller
 
     public function delete(TeachersDeleteRequest $request, User $teacher): RedirectResponse
     {
-        $this->repository->deleteTeacher($teacher);
+        $this->repository->delete($teacher);
 
         return redirect(route('accounts.teachers.index'))
             ->with('message', __('messages.deleted', ['resource' => $teacher->name]));

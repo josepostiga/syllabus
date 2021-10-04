@@ -5,7 +5,7 @@ namespace Tests\Feature\Controllers\TeachersController;
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
-use Domains\Accounts\Repositories\UserRepository;
+use Domains\Accounts\Repositories\TeacherRepository;
 use Domains\Accounts\Tests\DataProviders\UserRolesDataProvider;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -91,7 +91,7 @@ class ControllerStoreTest extends TestCase
             'role' => UserRolesEnum::TEACHER,
         ];
 
-        $this->mock(UserRepository::class)
+        $this->mock(TeacherRepository::class)
             ->shouldReceive('storeTeacher')
             ->once()
             ->with($payload['name'], $payload['email'], $payload['role'])

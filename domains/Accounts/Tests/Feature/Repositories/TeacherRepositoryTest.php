@@ -5,23 +5,24 @@ namespace Domains\Accounts\Tests\Feature\Repositories;
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Notifications\AccountCreatedNotification;
-use Domains\Accounts\Repositories\UserRepository;
+use Domains\Accounts\Repositories\TeacherRepository;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class UserRepositoryTest extends TestCase
+class TeacherRepositoryTest extends TestCase
 {
     use WithFaker;
 
-    private UserRepository $repository;
+    private TeacherRepository $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repository = new UserRepository();
+        $this->repository = new TeacherRepository();
     }
 
     /** @test */
@@ -33,7 +34,7 @@ class UserRepositoryTest extends TestCase
         $email = $this->faker->safeEmail;
         $role = UserRolesEnum::TEACHER;
 
-        $newTeacher = $this->repository->storeTeacher($name, $email, $role);
+        $newTeacher = $this->repository->store($name, $email, $role);
 
         $this->assertDatabaseHas('users', [
             'name' => $name,
@@ -50,8 +51,9 @@ class UserRepositoryTest extends TestCase
         $teacher = UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create();
         $headteacher = UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create();
 
-        $teachersList = $this->repository->listTeachers();
+        $teachersList = $this->repository->list();
 
+        self::assertInstanceOf(Paginator::class, $teachersList);
         self::assertTrue($teachersList->contains($teacher));
         self::assertTrue($teachersList->contains($headteacher));
     }
@@ -61,7 +63,7 @@ class UserRepositoryTest extends TestCase
     {
         $teacher = UserFactory::new()->role(UserRolesEnum::TEACHER)->create();
 
-        $updatedTeacher = $this->repository->updateTeacher(
+        $updatedTeacher = $this->repository->update(
             $teacher,
             $this->faker->name,
             $this->faker->safeEmail,
@@ -84,7 +86,7 @@ class UserRepositoryTest extends TestCase
     {
         $teacher = UserFactory::new()->role(UserRolesEnum::TEACHER)->create();
 
-        self::assertTrue($this->repository->deleteTeacher($teacher));
+        self::assertTrue($this->repository->delete($teacher));
 
         $this->assertSoftDeleted('users', [
             'id' => $teacher->id,
@@ -98,7 +100,7 @@ class UserRepositoryTest extends TestCase
 
         $teacher = UserFactory::new()->create();
 
-        $this->repository->updateTeacher(
+        $this->repository->update(
             $teacher,
             $teacher->name,
             $this->faker->safeEmail,
@@ -114,7 +116,7 @@ class UserRepositoryTest extends TestCase
         $teacher1 = UserFactory::new()->role(UserRolesEnum::TEACHER)->create(['name' => 'Teacher 1']);
         $teacher2 = UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create(['name' => 'Teacher 2']);
 
-        $filteredTeachers = $this->repository->searchTeachers('Teacher 1');
+        $filteredTeachers = $this->repository->search('Teacher 1');
 
         self::assertCount(1, $filteredTeachers);
         self::assertTrue($filteredTeachers->contains('name', '=', $teacher1->name));
@@ -127,7 +129,7 @@ class UserRepositoryTest extends TestCase
         $teacher1 = UserFactory::new()->role(UserRolesEnum::TEACHER)->create(['email' => 'teacher1@getsyllabus.app']);
         $teacher2 = UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create(['email' => 'teacher2@getsyllabus.app']);
 
-        $filteredTeachers = $this->repository->searchTeachers('teacher1@getsyllabus.app');
+        $filteredTeachers = $this->repository->search('teacher1@getsyllabus.app');
 
         self::assertCount(1, $filteredTeachers);
         self::assertTrue($filteredTeachers->contains('email', '=', $teacher1->email));

@@ -4,7 +4,7 @@ namespace Tests\Feature\Controllers\TeachersController;
 
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
-use Domains\Accounts\Repositories\UserRepository;
+use Domains\Accounts\Repositories\TeacherRepository;
 use Domains\Accounts\Tests\DataProviders\UserRolesDataProvider;
 use Illuminate\Database\Eloquent\Collection;
 use Mockery\MockInterface;
@@ -40,7 +40,7 @@ class ControllerIndexTest extends TestCase
             UserFactory::new()->role(UserRolesEnum::HEADTEACHER)->create(),
         ]);
 
-        $this->mock(UserRepository::class, static function (MockInterface $mockedUserRepository) use ($teachersList): void {
+        $this->mock(TeacherRepository::class, static function (MockInterface $mockedUserRepository) use ($teachersList): void {
             $mockedUserRepository->shouldReceive('listTeachers')
                 ->andReturn($teachersList);
         });
@@ -54,7 +54,7 @@ class ControllerIndexTest extends TestCase
     /** @test */
     public function it_filters_teachers_when_search_query_param_is_non_empty(): void
     {
-        $this->mock(UserRepository::class, static function (MockInterface $mockedUserRepository): void {
+        $this->mock(TeacherRepository::class, static function (MockInterface $mockedUserRepository): void {
             $mockedUserRepository->shouldReceive('searchTeachers')
                 ->with('search-string')
                 ->andReturn(new Collection());

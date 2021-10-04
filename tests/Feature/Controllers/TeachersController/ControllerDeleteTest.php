@@ -5,7 +5,7 @@ namespace Tests\Feature\Controllers\TeachersController;
 use Domains\Accounts\Database\Factories\UserFactory;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
-use Domains\Accounts\Repositories\UserRepository;
+use Domains\Accounts\Repositories\TeacherRepository;
 use Domains\Accounts\Tests\DataProviders\UserRolesDataProvider;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -55,7 +55,7 @@ class ControllerDeleteTest extends TestCase
     /** @test */
     public function it_deletes_teacher(): void
     {
-        $this->mock(UserRepository::class)
+        $this->mock(TeacherRepository::class)
             ->shouldReceive('deleteTeacher')
             ->once()
             ->with(
