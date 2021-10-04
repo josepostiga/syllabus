@@ -54,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function scopeSearch(Builder $builder, string $search): Builder
     {
-        return $builder->where('name', 'like', "{$search}%")
-            ->orWhere('email', 'like', "{$search}%");
+        return $builder->where('name', 'ilike', "{$search}%")
+            ->orWhere('email', 'ilike', "{$search}%");
     }
 }
