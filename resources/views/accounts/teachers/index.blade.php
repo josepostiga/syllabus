@@ -49,4 +49,6 @@
       @endforeach
     </x-tables.base>
   </x-page-sections.base>
+
+  {{ $teachers->links() }}
 @endsection
