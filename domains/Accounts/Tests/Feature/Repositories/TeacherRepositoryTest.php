@@ -118,9 +118,8 @@ class TeacherRepositoryTest extends TestCase
 
         $filteredTeachers = $this->repository->search('Teacher 1');
 
-        self::assertCount(1, $filteredTeachers);
-        self::assertTrue($filteredTeachers->contains('name', '=', $teacher1->name));
-        self::assertFalse($filteredTeachers->contains('name', '=', $teacher2->name));
+        self::assertContains($teacher1, $filteredTeachers->items());
+        self::assertNotContains($teacher2, $filteredTeachers->items());
     }
 
     /** @test */

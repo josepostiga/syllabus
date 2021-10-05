@@ -58,6 +58,6 @@ class TeacherRepository
     {
         return User::roles([UserRolesEnum::TEACHER, UserRolesEnum::HEADTEACHER])
             ->search($search)
-            ->paginate($recordsPerPage);
+            ->simplePaginate($recordsPerPage);
     }
 }
