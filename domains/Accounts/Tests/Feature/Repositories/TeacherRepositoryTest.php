@@ -118,8 +118,9 @@ class TeacherRepositoryTest extends TestCase
 
         $filteredTeachers = $this->repository->search('Teacher 1');
 
-        self::assertContains($teacher1, $filteredTeachers->items());
-        self::assertNotContains($teacher2, $filteredTeachers->items());
+        self::assertCount(1, $filteredTeachers->getCollection());
+        self::assertTrue($filteredTeachers->getCollection()->contains('name', '=', $teacher1->name));
+        self::assertFalse($filteredTeachers->getCollection()->contains('name', '=', $teacher2->name));
     }
 
     /** @test */
@@ -130,8 +131,8 @@ class TeacherRepositoryTest extends TestCase
 
         $filteredTeachers = $this->repository->search('teacher1@getsyllabus.app');
 
-        self::assertCount(1, $filteredTeachers);
-        self::assertTrue($filteredTeachers->contains('email', '=', $teacher1->email));
-        self::assertFalse($filteredTeachers->contains('email', '=', $teacher2->email));
+        self::assertCount(1, $filteredTeachers->getCollection());
+        self::assertTrue($filteredTeachers->getCollection()->contains('email', '=', $teacher1->email));
+        self::assertFalse($filteredTeachers->getCollection()->contains('email', '=', $teacher2->email));
     }
 }
