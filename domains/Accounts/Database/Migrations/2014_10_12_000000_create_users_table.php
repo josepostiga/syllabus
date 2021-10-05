@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
             $table->enum('role', [
                 UserRolesEnum::DIRECTOR,
             ])->index();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamptz('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestampsTz();

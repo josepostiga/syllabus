@@ -5,9 +5,13 @@ namespace Domains\Accounts\Database\Factories;
 use Domains\Accounts\Enums\UserRolesEnum;
 use Domains\Accounts\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use function now;
 
+/**
+ * @method User create($attributes = [], ?Model $parent = null);
+ */
 class UserFactory extends Factory
 {
     protected $model = User::class;
@@ -24,12 +28,17 @@ class UserFactory extends Factory
         ];
     }
 
-    public function unverified(): Factory
+    public function unverified(): self
     {
-        return $this->state(function () {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
+        return $this->state(fn (): array => [
+            'email_verified_at' => null,
+        ]);
+    }
+
+    public function role(string $role): self
+    {
+        return $this->state(fn (): array => [
+            'role' => $role,
+        ]);
     }
 }

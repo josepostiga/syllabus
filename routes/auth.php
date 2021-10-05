@@ -28,7 +28,7 @@ Route::middleware(['auth'])
         $router->get('/verify-email', EmailVerificationPromptController::class)->name('verification.notice');
 
         $router->get('/confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
-        $router->post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
+        $router->post('/confirm-password', [ConfirmablePasswordController::class, 'confirm']);
 
         $router->post('/logout', LogoutController::class)->name('logout');
     });
@@ -37,6 +37,6 @@ Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
     ->middleware(['auth', 'signed', 'throttle:6,1'])
     ->name('verification.verify');
 
-Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+Route::post('/email/verification-notification', EmailVerificationNotificationController::class)
     ->middleware(['auth', 'throttle:6,1'])
     ->name('verification.send');
