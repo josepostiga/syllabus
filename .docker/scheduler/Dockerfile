@@ -5,6 +5,4 @@ LABEL org.opencontainers.image.source="https://github.com/josepostiga/syllabus"
 
 RUN touch /var/log/cron.log
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends cron vim \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apk --no-cache add cronie vim

@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 docker run --rm -ti \
     --network "${NETWORK:-host}" \
-    --user "$(id -u):$(id -g)" \
+    --user "$(id -u)" \
+    --volume "$HOME/.config/composer":/tmp/composer \
     --volume "$SSH_AUTH_SOCK":/ssh-auth.sock \
-    --volume /etc/passwd:/etc/passwd:ro \
-    --volume /etc/group:/etc/group:ro \
     --volume "$(pwd)":/app \
     --env SSH_AUTH_SOCK=/ssh-auth.sock \
     -w /app \
     ghcr.io/josepostiga/syllabus/php:dev \
-    php -d memory_limit=-1 $@
+    php -d memory_limit=-1 "$@"
