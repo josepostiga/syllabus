@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+docker run --rm -ti \
+    --user "$(id -u)" \
+    --volume ~/.config/configstore:/home/node/.config/configstore \
+    --volume ~/.config/npm/lib/node_modules:/home/node/.config/npm/lib/node_modules \
+    --volume ~/.config/npm/bin:/home/node/.config/npm/bin \
+    --volume ~/.config/npm/cache:/home/node/.config/npm/cache \
+    --volume ~/.config/npm/cache:/home/node/.config/npm/share \
+    --volume ~/.npmrc:/home/node/.npmrc \
+    --volume "$SSH_AUTH_SOCK":/ssh-auth.sock \
+    --env SSH_AUTH_SOCK=/ssh-auth.sock \
+    --volume "$(pwd)":/app \
+    --expose 9229 \
+    --network "${NETWORK:-host}" \
+    -w /app \
+    -e PATH="/home/node/.config/npm/bin:$PATH" \
+    node:17-alpine npm "$@"
