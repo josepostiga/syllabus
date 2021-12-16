@@ -4,8 +4,6 @@ services:
   app:
     user: "1000"
     image: ghcr.io/josepostiga/syllabus/php:dev
-    networks:
-      - web
 
   mailhog:
     image: mailhog/mailhog:v1.0.1
@@ -22,7 +20,7 @@ services:
       - syllabus
 
   postgres:
-    image: postgres:13
+    image: postgres:13-alpine
     ports:
       - "5432:5432"
     volumes:
@@ -44,9 +42,6 @@ services:
     networks:
       - syllabus
 
-  scheduler:
-    image: ghcr.io/josepostiga/syllabus/scheduler
-
   web-server:
     labels:
       - "traefik.enable=true"
@@ -61,9 +56,8 @@ services:
       - .:/var/www/html:delegated
     restart: unless-stopped
     networks:
-      web:
-        aliases:
-          - getsyllabus.test
+      - web
+      - syllabus
 
 volumes:
   mailhog_data:
