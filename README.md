@@ -9,7 +9,7 @@ A School Management System built with students, parents, and teachers, in mind.
 
 ## Installation
 
-The following installation steps requires Docker and Docker-Compose to be installed in your system. 
+If you have `Make` installed in your computer, simply run `make install` on your terminal. Otherwise, follow the instructions bellow:
 
 1. Clone this repository.
 2. Run `.bin/composer install`

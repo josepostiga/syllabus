@@ -2,7 +2,7 @@ default:
 	make start
 
 install:
-	cp docker-compose.override-example.yaml .docker-compose.override.yaml
+	cp docker-compose.override-example.yaml docker-compose.override.yaml
 	cp .env.example .env
 	composer install
 	npm ci
