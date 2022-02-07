@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app:
+  app.getsyllabus.local:
     image: ghcr.io/josepostiga/syllabus/php
     restart: unless-stopped
     volumes:
@@ -11,7 +11,7 @@ services:
     networks:
       - syllabus
 
-  scheduler:
+  scheduler.getsyllabus.local:
     image: ghcr.io/josepostiga/syllabus/scheduler
     restart: unless-stopped
     volumes:
