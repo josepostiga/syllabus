@@ -13,4 +13,6 @@ Homestead.json
 Homestead.yaml
 docker-compose.override.yaml
 npm-debug.log
+public/css
+public/js
 yarn-error.log
